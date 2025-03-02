@@ -1,18 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <upper-panner></upper-panner>
+    <the-features :ShowDetailsArray="ShowDetailsArray"></the-features>
+    <dairy-intro></dairy-intro>
+    <about-cheese></about-cheese>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import UpperPanner from "@/components/HomePage/UpperPanner.vue";
+import TheFeatures from "@/components/HomePage/TheFeatures.vue";
+import DairyIntro from "@/components/HomePage/DairyIntro.vue";
+import AboutCheese from "@/components/HomePage/AboutCheese.vue";
+import { mapActions, mapState } from "pinia";
+import { useStore } from "@/stores/ShowDetails";
 
+// @ is an alias to /src
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    UpperPanner,
+    TheFeatures,
+    DairyIntro,
+    AboutCheese,
+  },
+  computed: {
+    ...mapState(useStore, ["ShowDetailsArray"]),
+  },
+  methods: {
+    ...mapActions(useStore, ["getDetailes"]),
+  },
+  async mounted() {
+    await this.getDetailes();
   },
 };
 </script>

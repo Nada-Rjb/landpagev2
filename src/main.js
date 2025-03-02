@@ -1,6 +1,22 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import "@/assets/reset.css";
 
-createApp(App).use(store).use(router).mount("#app");
+//pinia
+import { createPinia } from "pinia";
+//emitter config
+import mitt from "mitt";
+const emitter = mitt();
+import "@mdi/font/css/materialdesignicons.css";
+///swiper
+// In main.js or the relevant component file
+import "swiper/css";
+import "swiper/css/pagination";
+// Components
+
+createApp(App)
+  .use(createPinia())
+  .provide("emitter", emitter)
+  .use(router)
+  .mount("#app");

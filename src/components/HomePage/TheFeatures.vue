@@ -31,8 +31,6 @@
           :fadeEffect="{
             crossFade: true,
           }"
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
           :slidesPerView="slidesPerView"
           :modules="modules"
           :autoplay="{
@@ -84,18 +82,11 @@ export default {
     SwiperSlide,
   },
   setup() {
-    const onSwiper = (swiper) => {
-      console.log(swiper);
-    };
-    const onSlideChange = () => {
-      console.log("slide change");
-    };
     const slidesPerView = 3; // Adjust this based on your layout or container size
 
     return {
       modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-      onSwiper,
-      onSlideChange,
+
       slidesPerView,
     };
   },

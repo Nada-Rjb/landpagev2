@@ -6,13 +6,12 @@
           class="equal-coulmns"
           data-gap="large"
           data-align="center"
-          v-for="(card, index) in limitedCards"
-          :key="index"
+          v-if="currentCard"
         >
           <div class="flow font-size-lg">
-            <h2>{{ card.title }}</h2>
+            <h2>{{ currentCard.title }}</h2>
             <p>
-              {{ card.description }}
+              {{ currentCard.description }}
             </p>
             <a class="button" href="#"
               >اعرف المزيد
@@ -20,7 +19,10 @@
             </a>
           </div>
           <div>
-            <img :src="`https://erp.elfateh.online${card.image}`" alt="" />
+            <img
+              :src="`https://erp.elfateh.online${currentCard.image}`"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -50,22 +52,43 @@
 </template>
 <script>
 export default {
-  setup() {
-    return {};
+  data() {
+    return {
+      currentIndex: 0,
+    };
   },
   props: {
+    //get data
     ShowDetailsArray: {
       type: Array,
       required: true,
     },
   },
   computed: {
+    // Filter only the required cards
     limitedCards() {
       console.log("ShowDetailsArray before filtering:", this.ShowDetailsArray);
       return (this.ShowDetailsArray || [])
         .filter((item) => item.layout_type === "Right Image - Left Text")
-        .slice(0, 1);
+        .slice(0, 6);
     },
+    // Get the current card from the filtered list
+    currentCard() {
+      console.log("Current Index:", this.currentIndex);
+      console.log("Limited Cards:", this.limitedCards);
+      console.log(
+        "Current Card:",
+        this.limitedCards.length ? this.limitedCards[this.currentIndex] : null
+      );
+      return this.limitedCards.length
+        ? this.limitedCards[this.currentIndex]
+        : null;
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.limitedCards.length;
+    }, 2000);
   },
 };
 </script>

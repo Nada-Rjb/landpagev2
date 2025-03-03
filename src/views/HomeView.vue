@@ -3,7 +3,7 @@
     <upper-panner></upper-panner>
     <the-features :ShowDetailsArray="ShowDetailsArray"></the-features>
     <dairy-intro></dairy-intro>
-    <about-cheese></about-cheese>
+    <about-cheese :ShowDetailsArray="ShowDetailsArray"></about-cheese>
   </div>
 </template>
 

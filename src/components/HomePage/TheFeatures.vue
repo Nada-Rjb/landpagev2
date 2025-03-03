@@ -109,10 +109,9 @@ export default {
     limitedCards() {
       return (this.ShowDetailsArray || [])
         .filter((item) => item.layout_type === "middel-section")
-        .slice(0, 3);
+        .slice(0, 6);
     },
   },
 };
 </script>
-
 <style lang="scss"></style>

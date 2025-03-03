@@ -2,12 +2,17 @@
   <div>
     <section class="section background-extra-dark section-title">
       <div class="wrapper" data-width="wide">
-        <div class="equal-coulmns" data-gap="large" data-align="center">
+        <div
+          class="equal-coulmns"
+          data-gap="large"
+          data-align="center"
+          v-for="(card, index) in limitedCards"
+          :key="index"
+        >
           <div class="flow font-size-lg">
-            <h2>ارتقِ بمخبوزاتك</h2>
+            <h2>{{ card.title }}</h2>
             <p>
-              استمتع باستخدام منتجاتنا الطبيعية من الألبان لتحسين الجودة والنكهة
-              في كل وصفة. نحن شريكك الموثوق في نجاح كل معجنات تقدمه
+              {{ card.description }}
             </p>
             <a class="button" href="#"
               >اعرف المزيد
@@ -15,12 +20,12 @@
             </a>
           </div>
           <div>
-            <img src="@\assets\imges\c5.webp" alt="" />
+            <img :src="`https://erp.elfateh.online${card.image}`" alt="" />
           </div>
         </div>
       </div>
     </section>
-    <section class="section">
+    <!-- <section class="section">
       <div class="wrapper" data-width="wide">
         <div class="equal-coulmns" data-gap="large" data-align="center">
           <div>
@@ -40,6 +45,27 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
+<script>
+export default {
+  setup() {
+    return {};
+  },
+  props: {
+    ShowDetailsArray: {
+      type: Array,
+      required: true,
+    },
+  },
+  computed: {
+    limitedCards() {
+      console.log("ShowDetailsArray before filtering:", this.ShowDetailsArray);
+      return (this.ShowDetailsArray || [])
+        .filter((item) => item.layout_type === "Right Image - Left Text")
+        .slice(0, 1);
+    },
+  },
+};
+</script>

@@ -2,30 +2,33 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { apiKey, apiSecret } from "@/config";
 
-//Creates a Pinia store named "ShowDetails" and exports it for use in Vue components.
 export const useStore = defineStore("ShowDetails", {
   state: () => ({
-    ShowDetailsArray: [],
+    ShowDetailsArray: [], // Holds feature data
+    CollectionsArray: [], // Holds collection data
   }),
   actions: {
-    async getDetailes() {
+    async fetchData(apiEndpoint, stateKey) {
       try {
         const response = await axios.get(
-          "https://erp.elfateh.online/api/method/general_customization.general_customiztion.api.get_features",
+          `https://erp.elfateh.online/api/method/general_customization.general_customiztion.api.${apiEndpoint}`,
           {
             headers: {
-              Authorization: `token ${apiKey}:${apiSecret}`, // ✅ Add Authorization Header
-              //This tells the server that the request sends/receives JSON data.
+              Authorization: `token ${apiKey}:${apiSecret}`,
               "Content-Type": "application/json",
             },
           }
         );
-
-        console.log(response.data);
-        this.ShowDetailsArray = response.data.message;
+        console.log(`Fetched ${apiEndpoint}:`, response.data);
+        this[stateKey] = response.data.message; // Dynamically update state for each array
       } catch (error) {
-        console.error("Error fetching details:");
+        console.error(`Error fetching ${apiEndpoint}:`, error);
       }
+    },
+
+    async getDetailes() {
+      await this.fetchData("get_features", "ShowDetailsArray");
+      await this.fetchData("get_collections", "CollectionsArray");
     },
   },
 });

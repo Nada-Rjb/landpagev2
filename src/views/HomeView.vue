@@ -4,6 +4,7 @@
     <the-features :ShowDetailsArray="ShowDetailsArray"></the-features>
     <dairy-intro></dairy-intro>
     <about-cheese :ShowDetailsArray="ShowDetailsArray"></about-cheese>
+    <CategoriesSection :CollectionsArray="CollectionsArray"></CategoriesSection>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import UpperPanner from "@/components/HomePage/UpperPanner.vue";
 import TheFeatures from "@/components/HomePage/TheFeatures.vue";
 import DairyIntro from "@/components/HomePage/DairyIntro.vue";
 import AboutCheese from "@/components/HomePage/AboutCheese.vue";
+import CategoriesSection from "@/components/HomePage/CategoriesSection.vue";
 import { mapActions, mapState } from "pinia";
 import { useStore } from "@/stores/ShowDetails";
 
@@ -23,9 +25,10 @@ export default {
     TheFeatures,
     DairyIntro,
     AboutCheese,
+    CategoriesSection,
   },
   computed: {
-    ...mapState(useStore, ["ShowDetailsArray"]),
+    ...mapState(useStore, ["ShowDetailsArray", "CollectionsArray"]),
   },
   methods: {
     ...mapActions(useStore, ["getDetailes"]),

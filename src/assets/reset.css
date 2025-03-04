@@ -188,6 +188,8 @@
     --border-radius-1: 0.25rem;
     --border-radius-2: 0.5rem;
     --border-radius-3: 0.75rem;
+    --border-radius-5: 10rem;
+
   }
   html {
     font-family: var(--ff-arabic);

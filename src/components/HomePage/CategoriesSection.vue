@@ -1,13 +1,18 @@
 <template>
-  <div class="freature">
+  <div class="categories">
     <section class="section" data-padding="compact">
-      <div class="wrapper flow">
-        <h1 class="section-title">تسوق حسب الفئات</h1>
+      <!-- <div class="wrapper flow"> -->
+      <div class="flow">
+        <h1 class="section-title wrapper flow">تسوق حسب الفئات</h1>
 
         <!-- Swiper for more than 4 items -->
         <div v-if="CollectionsArray.length" class="itemcenter">
           <swiper
             :pagination="{ el: '.swiper-pagination', clickable: true }"
+            :navigation="{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }"
             :slidesPerView="slidesPerView"
             :space-between="20"
             :modules="modules"
@@ -28,6 +33,8 @@
                 <h3 class="card--title">{{ card.item_group_name }}</h3>
               </div>
             </swiper-slide>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
           </swiper>
         </div>
@@ -88,11 +95,19 @@ export default {
   font-size: var(--card-title-font-size, var(--font-size-regular));
   color: var(--card-title-color, var(--text-brand));
   text-align: center;
+  z-index: 1;
 }
 
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--text-brand);
+  font-size: 5px;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.2);
 }
 </style>

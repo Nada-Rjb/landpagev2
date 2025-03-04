@@ -13,6 +13,8 @@ import "@mdi/font/css/materialdesignicons.css";
 // In main.js or the relevant component file
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 // Components
 
 createApp(App)

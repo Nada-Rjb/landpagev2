@@ -5,6 +5,8 @@
     <dairy-intro></dairy-intro>
     <about-cheese :ShowDetailsArray="ShowDetailsArray"></about-cheese>
     <CategoriesSection :CollectionsArray="CollectionsArray"></CategoriesSection>
+    <ProductCom :WebsiteItemsArray="WebsiteItemsArray"></ProductCom>
+    <the-features :ShowDetailsArray="ShowDetailsArray"></the-features>
   </div>
 </template>
 
@@ -14,6 +16,7 @@ import TheFeatures from "@/components/HomePage/TheFeatures.vue";
 import DairyIntro from "@/components/HomePage/DairyIntro.vue";
 import AboutCheese from "@/components/HomePage/AboutCheese.vue";
 import CategoriesSection from "@/components/HomePage/CategoriesSection.vue";
+import ProductCom from "@/components/HomePage/ProductCom.vue";
 import { mapActions, mapState } from "pinia";
 import { useStore } from "@/stores/ShowDetails";
 
@@ -26,9 +29,14 @@ export default {
     DairyIntro,
     AboutCheese,
     CategoriesSection,
+    ProductCom,
   },
   computed: {
-    ...mapState(useStore, ["ShowDetailsArray", "CollectionsArray"]),
+    ...mapState(useStore, [
+      "ShowDetailsArray",
+      "CollectionsArray",
+      "WebsiteItemsArray",
+    ]),
   },
   methods: {
     ...mapActions(useStore, ["getDetailes"]),

@@ -4,14 +4,16 @@ import { apiKey, apiSecret } from "@/config";
 
 export const useStore = defineStore("ShowDetails", {
   state: () => ({
-    ShowDetailsArray: [], // Holds feature data
-    CollectionsArray: [], // Holds collection data
+    ShowDetailsArray: [],
+    CollectionsArray: [],
+    WebsiteItemsArray: [],
   }),
   actions: {
-    async fetchData(apiEndpoint, stateKey) {
+    async getDetailes() {
+      // Ensure this matches `mapActions`
       try {
         const response = await axios.get(
-          `https://erp.elfateh.online/api/method/general_customization.general_customiztion.api.${apiEndpoint}`,
+          `https://erp.elfateh.online/api/method/general_customization.general_customiztion.api.get_website_data`,
           {
             headers: {
               Authorization: `token ${apiKey}:${apiSecret}`,
@@ -19,16 +21,20 @@ export const useStore = defineStore("ShowDetails", {
             },
           }
         );
-        console.log(`Fetched ${apiEndpoint}:`, response.data);
-        this[stateKey] = response.data.message; // Dynamically update state for each array
-      } catch (error) {
-        console.error(`Error fetching ${apiEndpoint}:`, error);
-      }
-    },
 
-    async getDetailes() {
-      await this.fetchData("get_features", "ShowDetailsArray");
-      await this.fetchData("get_collections", "CollectionsArray");
+        if (response.data) {
+          this.ShowDetailsArray = response.data.message.features_data || [];
+          this.CollectionsArray = response.data.message.collections_data || [];
+          this.WebsiteItemsArray =
+            response.data.message.website_item_for_salle || [];
+
+          console.log("ShowDetailsArray:", this.ShowDetailsArray);
+          console.log("CollectionsArray:", this.CollectionsArray);
+          console.log("WebsiteItemsArray:", this.WebsiteItemsArray);
+        }
+      } catch (error) {
+        console.error("Error fetching details:", error);
+      }
     },
   },
 });

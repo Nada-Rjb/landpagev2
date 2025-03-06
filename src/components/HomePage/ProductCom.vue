@@ -1,8 +1,8 @@
 <template>
-  <div class="prouduct background-gray">
+  <div class="prouduct background-extra-dark">
     <section class="section" data-padding="compact">
       <div class="wrapper flow">
-        <h2 class="section-title">المنتجات</h2>
+        <h2 class="section-title gototitle">المنتجات</h2>
 
         <!-- Display only the current page of products -->
         <div class="grid-auto-fill">
@@ -54,6 +54,7 @@
         <AppPagination
           :totalPages="totalPage"
           v-model="currentPage"
+          @scroltotitle="scroltotitle"
         ></AppPagination>
       </div>
     </section>
@@ -75,7 +76,7 @@ export default {
   data() {
     return {
       currentPage: 1, // Sync with Pagination.vue
-      itemsPerPage: 3,
+      itemsPerPage: 12,
       showDelivery: true,
     };
   },
@@ -112,6 +113,12 @@ export default {
     },
     discountedPrice(item) {
       return item.price_list_rate * (1 - item.descound / 100).toFixed(2);
+    },
+    scroltotitle() {
+      const sectionTitle = document.querySelector(".gototitle");
+      if (sectionTitle) {
+        sectionTitle.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     },
   },
   mounted() {

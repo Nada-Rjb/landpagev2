@@ -11,9 +11,29 @@
               :src="`https://erp.elfateh.online${card.website_image}`"
               alt=""
             />
+            <!-- Show Discount Badge When on Sale -->
+            <!-- <div v-if="card.sale === 1" class="discount-badge">
+              خصم {{ card.descound }}%
+            </div> -->
+
             <div class="cardinfo">
               <h3 class="card--title">{{ card.description }}</h3>
-              <p>{{ card.price_list_rate }}جنيه</p>
+              <p v-if="card.sale === 1" class="discounted-price">
+                <span class="new-price">
+                  {{ discountedPrice(card) }}
+                </span>
+                <span class="currency">جنيه</span>
+                <span class="old-price">
+                  <span class="strike">{{ card.price_list_rate }}</span>
+                </span>
+                <span class="discount-text">خصم {{ card.descound }}%</span>
+              </p>
+
+              <!-- Show Normal Price if Not on Sale -->
+
+              <p v-else class="new-price">
+                {{ card.price_list_rate }} <span class="currency"> جنيه </span>
+              </p>
             </div>
 
             <p
@@ -88,6 +108,9 @@ export default {
         this.currentPage--;
       }
     },
+    discountedPrice(item) {
+      return item.price_list_rate * (1 - item.descound / 100).toFixed(2);
+    },
   },
   mounted() {
     // Toggle `showDelivery` every 2 seconds
@@ -98,7 +121,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .card {
   align-items: center;
   text-align: center;
@@ -121,8 +144,9 @@ export default {
   }
   .card--title {
     font-size: 1.1rem;
-    margin: 0.5rem 0;
+    margin: 0 0 1.5rem 0;
     text-align: start;
+    font-weight: normal;
   }
   p {
     margin: 0;
@@ -141,8 +165,41 @@ export default {
   }
   .hidden {
     opacity: 0;
-
     transform: translateY(10px); /* Moves up when hidden */
+  }
+
+  .discounted-price {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+  }
+
+  .new-price {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+  }
+
+  .currency {
+    font-weight: normal;
+    color: #333;
+  }
+
+  .old-price {
+    color: gray;
+  }
+
+  .strike {
+    text-decoration: line-through;
+    font-size: 14px;
+    color: gray;
+  }
+
+  .discount-text {
+    color: green;
+    font-weight: bold;
+    font-size: 14px;
   }
 }
 </style>

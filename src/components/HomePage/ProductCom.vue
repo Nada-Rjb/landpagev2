@@ -1,5 +1,5 @@
 <template>
-  <div class="feature">
+  <div class="prouduct background-gray">
     <section class="section" data-padding="compact">
       <div class="wrapper flow">
         <h2 class="section-title">المنتجات</h2>
@@ -51,13 +51,18 @@
         </div>
 
         <!-- Pagination Controls -->
+        <AppPagination></AppPagination>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import AppPagination from "../global/AppPagination.vue";
 export default {
+  components: {
+    AppPagination,
+  },
   props: {
     WebsiteItemsArray: {
       type: Array,
@@ -121,6 +126,7 @@ export default {
   text-align: center;
   height: 100%;
   display: grid;
+  background-color: var(--clr-white);
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 

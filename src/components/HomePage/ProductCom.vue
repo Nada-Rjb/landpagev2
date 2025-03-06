@@ -51,7 +51,10 @@
         </div>
 
         <!-- Pagination Controls -->
-        <AppPagination></AppPagination>
+        <AppPagination
+          :totalPages="totalPage"
+          v-model="currentPage"
+        ></AppPagination>
       </div>
     </section>
   </div>
@@ -71,7 +74,7 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
+      currentPage: 1, // Sync with Pagination.vue
       itemsPerPage: 12,
       showDelivery: true,
     };

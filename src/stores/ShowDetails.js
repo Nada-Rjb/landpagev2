@@ -7,6 +7,7 @@ export const useStore = defineStore("ShowDetails", {
     ShowDetailsArray: [],
     CollectionsArray: [],
     WebsiteItemsArray: [],
+    WebsiteServiceArray: [],
   }),
   actions: {
     async getDetailes() {
@@ -25,8 +26,12 @@ export const useStore = defineStore("ShowDetails", {
         if (response.data) {
           this.ShowDetailsArray = response.data.message.features_data || [];
           this.CollectionsArray = response.data.message.collections_data || [];
-          this.WebsiteItemsArray =
-            response.data.message.website_item_for_salle || [];
+          this.WebsiteItemsArray = (
+            response.data.message.website_item_for_salle || []
+          ).filter((item) => item.service !== 1);
+          this.WebsiteServiceArray = (
+            response.data.message.website_item_for_salle || []
+          ).filter((item) => item.service === 1);
 
           console.log("ShowDetailsArray:", this.ShowDetailsArray);
           console.log("CollectionsArray:", this.CollectionsArray);

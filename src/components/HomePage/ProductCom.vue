@@ -6,7 +6,7 @@
 
         <!-- Display only the current page of products -->
         <div class="grid-auto-fill">
-          <div class="card" v-for="(card, i) in itemPerPage" :key="i">
+          <div class="card" v-for="card in itemPerPage" :key="card.id">
             <img
               :src="`https://erp.elfateh.online${card.website_image}`"
               alt=""
@@ -15,6 +15,15 @@
               <h3 class="card--title">{{ card.description }}</h3>
               <p>{{ card.price_list_rate }}جنيه</p>
             </div>
+
+            <p
+              v-if="card.freedelivery"
+              class="Delivery"
+              :class="{ 'fade-in-out': true, hidden: !showDelivery }"
+            >
+              توصيل مجاني 🚚
+            </p>
+            <p v-else class="hidden">🚚 توصيل غير متاح</p>
           </div>
         </div>
 
@@ -45,6 +54,7 @@ export default {
     return {
       currentPage: 1,
       itemsPerPage: 12,
+      showDelivery: true,
     };
   },
   computed: {
@@ -79,6 +89,12 @@ export default {
       }
     },
   },
+  mounted() {
+    // Toggle `showDelivery` every 2 seconds
+    setInterval(() => {
+      this.showDelivery = !this.showDelivery;
+    }, 2000);
+  },
 };
 </script>
 
@@ -87,6 +103,7 @@ export default {
   align-items: center;
   text-align: center;
   height: 100%;
+  display: grid;
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -104,13 +121,28 @@ export default {
   }
   .card--title {
     font-size: 1.1rem;
-    font-weight: bold;
     margin: 0.5rem 0;
     text-align: start;
   }
   p {
     margin: 0;
     word-wrap: break-word;
+  }
+  .Delivery {
+    font-size: 18px;
+    color: green;
+    font-weight: bold;
+    margin-block-start: auto;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  }
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hidden {
+    opacity: 0;
+
+    transform: translateY(10px); /* Moves up when hidden */
   }
 }
 </style>

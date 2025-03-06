@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       currentPage: 1, // Sync with Pagination.vue
-      itemsPerPage: 2,
+      itemsPerPage: 12,
       showDelivery: true,
     };
   },

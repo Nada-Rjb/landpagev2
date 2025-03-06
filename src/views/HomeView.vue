@@ -6,7 +6,7 @@
     <about-cheese :ShowDetailsArray="ShowDetailsArray"></about-cheese>
     <CategoriesSection :CollectionsArray="CollectionsArray"></CategoriesSection>
     <ProductCom :WebsiteItemsArray="WebsiteItemsArray"></ProductCom>
-    <ServiceSection :ShowDetailsArray="ShowDetailsArray"></ServiceSection>
+    <ServiceSection :WebsiteServiceArray="WebsiteServiceArray"></ServiceSection>
   </div>
 </template>
 
@@ -38,6 +38,7 @@ export default {
       "ShowDetailsArray",
       "CollectionsArray",
       "WebsiteItemsArray",
+      "WebsiteServiceArray",
     ]),
   },
   methods: {

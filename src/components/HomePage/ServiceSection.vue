@@ -6,7 +6,7 @@
         <div class="faq-bento">
           <!-- Card 1 -->
           <div class="card">
-            <h3 class="card--title">خدماتنا</h3>
+            <h3 class="card--title"></h3>
             <p>
               نقدم حلولًا متكاملة للشركات في مجال تصنيع ومعالجة الأجبان، بما في
               ذلك فكيم الجبن الرومي، بشر الجبن، وتنشيره بأعلى معايير الجودة. كما
@@ -16,34 +16,17 @@
             </p>
             <button>اطلب خدماتنا</button>
           </div>
-          <div class="card">
-            <img src="assets\imges\c21.webp" alt="عملية فكيم الجبن" />
-            <h3 class="card--title">فكيم الجبن الرومي</h3>
-            <p>
-              نقوم بعملية فكيم الجبن الرومي باستخدام أحدث تقنيات التفريغ الهوائي
-              للحفاظ على جودة وطراوة الجبن.
-            </p>
-          </div>
 
           <!-- Card 2 -->
-          <div class="card">
-            <img src="assets\imges\cheese.jpg" alt="بشر الجبن" />
-            <h3 class="card--title">بشر الجبن</h3>
-            <p>
-              خدمة بشر الجبن بجودة عالية لمساعدتك في تجهيز المخبوزات والأطعمة
-              بسهولة وسرعة.
-            </p>
+          <div v-for="card in WebsiteServiceArray" :key="card.id" class="card">
+            <img
+              :src="`https://erp.elfateh.online${card.website_image}`"
+              alt=""
+            />
+            <h3 class="card--title">{{ card.web_item_name }}</h3>
+            <p>{{ card.short_description }}</p>
           </div>
-
           <!-- Card 3 -->
-          <div class="card">
-            <img src="assets\imges\c23.jpg" alt="تنشير الجبن الرومي" />
-            <h3 class="card--title">تنشير الجبن الرومي</h3>
-            <p>
-              تقنية دقيقة لتنشير الجبن الرومي مع الحفاظ على النكهة المميزة
-              والجودة المطلوبة.
-            </p>
-          </div>
 
           <!-- Card 4 -->
         </div>
@@ -55,18 +38,26 @@
 export default {
   props: {
     //get data
-    ShowDetailsArray: {
+    WebsiteServiceArray: {
       type: Array,
       required: true,
     },
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+.card {
+  border-radius: var(--border-radius-1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.card:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
 .faq-bento {
   --card-title-color: var(--text-high-contrast);
   display: grid;
-  gap: 1rem;
+  gap: 2rem 1.5rem;
   grid-template-areas:
     "card-one"
     "card-two"
@@ -78,11 +69,16 @@ export default {
       "card-three card-four ";
   }
   .card > img {
-    height: 100%;
-    object-fit: cover;
-    /*change position of crop*/
-    /*object-position: top left;*/
+    width: 100%; /* Make the image responsive */
+    aspect-ratio: 16 / 9; /* Adjust this ratio as needed */
+    object-fit: cover; /* Ensures the whole image fits without cropping */
+    transition: transform 0.3s ease-in-out;
   }
+
+  .card > img:hover {
+    transform: scale(1.1);
+  }
+
   @media (width>600px) {
     /*change the order of img in even card */
     .card:nth-child(even) > img {
@@ -92,12 +88,11 @@ export default {
   @media (width>900px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-      "card-one    card-two    card-four"
-      "card-one  card-three  card-four";
+      "card-one    card-one     card-four"
+      "card-two  card-three  card-four";
   }
   .card:nth-child(1) {
     grid-area: card-one;
-    background-color: white;
   }
   .card:nth-child(2) {
     grid-area: card-two;
@@ -116,6 +111,21 @@ export default {
 
   .card:nth-child(4) {
     grid-area: card-four;
+  }
+  button {
+    background-color: var(--clr-brand-500);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 40%;
+  }
+  button:hover {
+    background-color: #fabd92;
+    transform: scale(1.05);
   }
 }
 </style>

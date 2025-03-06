@@ -36,6 +36,7 @@ export const useStore = defineStore("ShowDetails", {
           console.log("ShowDetailsArray:", this.ShowDetailsArray);
           console.log("CollectionsArray:", this.CollectionsArray);
           console.log("WebsiteItemsArray:", this.WebsiteItemsArray);
+          console.log("WebsiteServiceArray:", this.WebsiteServiceArray);
         }
       } catch (error) {
         console.error("Error fetching details:", error);

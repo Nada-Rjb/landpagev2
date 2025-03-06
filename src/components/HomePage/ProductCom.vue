@@ -7,14 +7,17 @@
         <!-- Display only the current page of products -->
         <div class="grid-auto-fill">
           <div class="card" v-for="card in itemPerPage" :key="card.idx">
-            <img
-              :src="`https://erp.elfateh.online${card.website_image}`"
-              alt=""
-            />
-            <!-- Show Discount Badge When on Sale -->
-            <!-- <div v-if="card.sale === 1" class="discount-badge">
-              خصم {{ card.descound }}%
-            </div> -->
+            <div class="cardimg">
+              <img
+                :src="`https://erp.elfateh.online${card.website_image}`"
+                alt=""
+              />
+              <div class="cart-icon">
+                <button>
+                  <img src="../../assets/imges/cart.png" alt="Cart" />
+                </button>
+              </div>
+            </div>
 
             <div class="cardinfo">
               <h3 class="card--title">{{ card.description }}</h3>
@@ -48,15 +51,6 @@
         </div>
 
         <!-- Pagination Controls -->
-        <div class="pagination">
-          <button @click="prevPage" :disabled="currentPage === 1">
-            السابق
-          </button>
-          <span>من</span>
-          <button @click="nextPage" :disabled="currentPage === totalPage">
-            التالى
-          </button>
-        </div>
       </div>
     </section>
   </div>
@@ -200,6 +194,32 @@ export default {
     color: green;
     font-weight: bold;
     font-size: 14px;
+  }
+  .cardimg {
+    position: relative;
+  }
+  .cart-icon {
+    position: absolute;
+    bottom: 5px; // Positions the icon near the bottom of the image
+    left: 5px; // Positions it near the right edge
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cart-icon button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  cart-icon img {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>

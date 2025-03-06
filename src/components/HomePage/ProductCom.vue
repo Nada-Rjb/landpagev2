@@ -6,7 +6,7 @@
 
         <!-- Display only the current page of products -->
         <div class="grid-auto-fill">
-          <div class="card" v-for="card in itemPerPage" :key="card.id">
+          <div class="card" v-for="card in itemPerPage" :key="card.idx">
             <img
               :src="`https://erp.elfateh.online${card.website_image}`"
               alt=""

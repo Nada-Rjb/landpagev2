@@ -7,6 +7,7 @@
     <CategoriesSection :CollectionsArray="CollectionsArray"></CategoriesSection>
     <ProductCom :WebsiteItemsArray="WebsiteItemsArray"></ProductCom>
     <ServiceSection :WebsiteServiceArray="WebsiteServiceArray"></ServiceSection>
+    <QualityFeatures></QualityFeatures>
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import ProductCom from "@/components/HomePage/ProductCom.vue";
 import ServiceSection from "@/components/HomePage/ServiceSection.vue";
 import { mapActions, mapState } from "pinia";
 import { useStore } from "@/stores/ShowDetails";
+import QualityFeatures from "@/components/HomePage/QualityFeatures.vue";
 
 // @ is an alias to /src
 export default {
@@ -32,6 +34,7 @@ export default {
     CategoriesSection,
     ProductCom,
     ServiceSection,
+    QualityFeatures,
   },
   computed: {
     ...mapState(useStore, [

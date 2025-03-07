@@ -136,23 +136,26 @@ export default {
     display: flex;
     flex-direction: column;
   }
+  ////style product detaiels
   .product-details {
-    background-color: red;
+    background-color: rgb(187, 216, 166);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     gap: 0.5rem;
     border-bottom: #333 solid 2px;
     margin-bottom: 0.5rem;
-  }
-  .product-details h1 {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  .price {
-    font-size: 20px;
-    color: #333;
-    font-weight: bold;
+    padding: 15px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .price {
+      font-size: 20px;
+      color: #333;
+      font-weight: bold;
+    }
   }
 
   .big-img-grid {

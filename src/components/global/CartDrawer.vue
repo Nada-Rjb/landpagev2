@@ -2,6 +2,7 @@
   <div class="drawer">
     <!-- <v-navigation-drawer location="right" v-model="drawer">
     </v-navigation-drawer> -->
+    <h1></h1>
   </div>
 </template>
 <!-- <script>

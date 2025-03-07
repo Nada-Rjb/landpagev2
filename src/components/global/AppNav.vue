@@ -16,12 +16,14 @@
           <ul role="list">
             <li><a href="/">الرئيسية</a></li>
             <li><a href="/product-guide.html">الخدمات</a></li>
+            <li><a href="/product-guide.html">المنتجات</a></li>
             <li><a href="/product-guide.html#faq">من نحن </a></li>
             <li><a href="/index.html#footer">اتصل بنا</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <hr />
   </header>
 </template>
 

@@ -1,19 +1,69 @@
 <template>
-  <div>
+  <div :key="$route.params.productId">
     <section class="section">
+      <v-skeleton-loader
+        class="mx-auto"
+        elevation="12"
+        max-width="400"
+        style="background-color: brown; width: 100px; height: 200px"
+        type="table-heading, list-item-two-line, image, table-tfoot"
+      ></v-skeleton-loader>
       <div class="wrapper flow" data-width="wide">
         <div class="detailes">
           <!-- Card 1 -->
           <div class="title-grid">
             <div class="product-details">
-              <h1>{{ SingleProduct?.web_item_name || "Loading..." }}</h1>
-              <p>{{ SingleProduct.price_list_rate }}</p>
+              <!-- Title Skeleton -->
+              <h1 v-if="!isLoading">
+                {{ SingleProduct?.web_item_name || "Loading..." }}
+              </h1>
+              <v-skeleton-loader
+                v-else
+                type="text"
+                style="background-color: gainsboro; width: 150px; height: 30px"
+              ></v-skeleton-loader>
+
+              <!-- Price Skeleton -->
+              <p v-if="!isLoading">{{ SingleProduct?.price_list_rate }}</p>
+              <v-skeleton-loader
+                v-else
+                type="text"
+                style="background-color: gainsboro; width: 100px; height: 20px"
+              ></v-skeleton-loader>
+
+              <!-- Rating Skeleton -->
               <div class="rating">
-                <span class="stars">★★★★★</span>
-                <span class="review">(150 Reviews)</span>
+                <span v-if="!isLoading" class="stars">★★★★★</span>
+                <v-skeleton-loader
+                  v-else
+                  type="text"
+                  style="background-color: gainsboro; width: 80px; height: 20px"
+                ></v-skeleton-loader>
+
+                <span v-if="!isLoading" class="review">(150 Reviews)</span>
+                <v-skeleton-loader
+                  v-else
+                  type="text"
+                  style="
+                    background-color: gainsboro;
+                    width: 100px;
+                    height: 20px;
+                  "
+                ></v-skeleton-loader>
               </div>
-              <p class="description">{{ SingleProduct.web_item_name }}</p>
+
+              <!-- Description Skeleton -->
+              <p v-if="!isLoading" class="description">
+                {{ SingleProduct?.web_item_name }}
+              </p>
+              <v-skeleton-loader
+                v-else
+                type="paragraph"
+                elevation="12"
+                style="background-color: gainsboro; width: 200px; height: 40px"
+              ></v-skeleton-loader>
             </div>
+
             <div class="quantity-selection">
               <label for="quantity">الكمية:</label>
               <button class="quantity-option">1</button>
@@ -32,6 +82,7 @@
             </div>
             <p>{{ SingleProduct.short_description || "" }}</p>
           </div>
+
           <div class="big-img-grid">
             <img
               :src="
@@ -40,7 +91,13 @@
                   : `https://erp.elfateh.online${SingleProduct.website_image}`
               "
               alt="big image"
+              v-if="!isLoading"
             />
+            <v-skeleton-loader
+              v-if="isLoading"
+              type="image, image, image, image"
+              style="background-color: gainsboro; width: 100%; height: 100%"
+            ></v-skeleton-loader>
           </div>
 
           <div
@@ -69,6 +126,13 @@ import { productstore } from "@/stores/ShowDetails";
 import { mapActions, mapState } from "pinia";
 
 export default {
+  data() {
+    return {
+      tab: "",
+      quantity: 1,
+      isLoading: false,
+    };
+  },
   props: {
     productId: {
       type: String,
@@ -84,8 +148,9 @@ export default {
       let currentBigImage =
         this.tab || `https://erp.elfateh.online${this.product.website_image}`;
       let clickedSmallImage = `https://erp.elfateh.online${this.product.thumbnail[index]}`;
-
+      this.isLoading = true;
       this.tab = clickedSmallImage;
+      this.SingleProduct = null;
 
       // Swap images in thumbnails
       this.product.thumbnail[index] = currentBigImage.replace(
@@ -94,26 +159,29 @@ export default {
       );
     },
   },
-  async mounted() {
-    await this.getsingleProduct(this.$route.params.productId);
-    console.log("getsingleProduct", this.$route.params.productId);
-    console.log("✅ Mounted web_item_name:", this.web_item_name);
-    if (this.web_item_name) {
-      this.getsingleProduct(decodeURIComponent(this.web_item_name));
-    } else {
-      console.error("❌ web_item_name is undefined in mounted()");
-    }
-    console.log("Product ID:", this.productId);
+  // async mounted() {
+  //   this.isLoading = false;
+
+  //   await this.getsingleProduct(this.$route.params.productId);
+  //   this.isLoading = false;
+  // },
+  watch: {
+    // 1️⃣ Watches the productId from the URL
+    "$route.params.productId": {
+      immediate: true,
+      async handler(newId) {
+        if (!newId) return;
+        this.isLoading = true;
+        this.tab = "";
+        const store = productstore();
+        store.$patch({ SingleProduct: "" });
+        await this.getsingleProduct(newId);
+        this.isLoading = false;
+      },
+    },
   },
   computed: {
     ...mapState(productstore, ["SingleProduct"]),
-  },
-
-  data() {
-    return {
-      tab: "",
-      quantity: 1,
-    };
   },
 };
 </script>
@@ -172,7 +240,6 @@ export default {
 }
 
 .product-details {
-  background-color: rgb(187, 216, 166);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

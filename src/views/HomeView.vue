@@ -20,7 +20,7 @@ import CategoriesSection from "@/components/HomePage/CategoriesSection.vue";
 import ProductCom from "@/components/HomePage/ProductCom.vue";
 import ServiceSection from "@/components/HomePage/ServiceSection.vue";
 import { mapActions, mapState } from "pinia";
-import { useStore } from "@/stores/ShowDetails";
+import { productstore } from "@/stores/ShowDetails";
 import QualityFeatures from "@/components/HomePage/QualityFeatures.vue";
 
 // @ is an alias to /src
@@ -37,7 +37,7 @@ export default {
     QualityFeatures,
   },
   computed: {
-    ...mapState(useStore, [
+    ...mapState(productstore, [
       "ShowDetailsArray",
       "CollectionsArray",
       "WebsiteItemsArray",
@@ -45,7 +45,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(useStore, ["getDetailes"]),
+    ...mapActions(productstore, ["getDetailes"]),
   },
   async mounted() {
     await this.getDetailes();

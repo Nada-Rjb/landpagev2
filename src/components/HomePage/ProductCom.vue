@@ -20,7 +20,7 @@
             </div>
 
             <div class="cardinfo">
-              <h3 class="card--title">{{ card.description }}</h3>
+              <h3 class="card--title">{{ card.web_item_name }}</h3>
               <p v-if="card.sale === 1" class="discounted-price">
                 <span class="new-price">
                   {{ discountedPrice(card) }}
@@ -38,7 +38,14 @@
                 {{ card.price_list_rate }} <span class="currency"> جنيه </span>
               </p>
             </div>
-
+            <button
+              @click="
+                console.log(card.web_item_name) ||
+                  $router.push(`/product/${card.web_item_name}`)
+              "
+            >
+              View Product
+            </button>
             <p
               v-if="card.freedelivery"
               class="Delivery"
@@ -101,6 +108,17 @@ export default {
     },
   },
   methods: {
+    goToProduct(card) {
+      console.log({
+        params: { productId: card.web_item_name },
+      });
+      console.log("cnsdjlkcnsdjks");
+
+      this.$router.push({
+        name: "ProductDetails",
+        params: { productId: encodeURIComponent(card.web_item_name) },
+      });
+    },
     nextPage() {
       if (this.currentPage < this.totalPage) {
         this.currentPage++;

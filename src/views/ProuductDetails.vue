@@ -94,8 +94,8 @@ export default {
       );
     },
   },
-  mounted() {
-    this.getsingleProduct(this.$route.params.productId);
+  async mounted() {
+    await this.getsingleProduct(this.$route.params.productId);
     console.log("getsingleProduct", this.$route.params.productId);
     console.log("✅ Mounted web_item_name:", this.web_item_name);
     if (this.web_item_name) {

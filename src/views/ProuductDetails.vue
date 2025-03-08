@@ -7,12 +7,12 @@
           <div class="title-grid">
             <div class="product-details">
               <h1>{{ SingleProduct?.web_item_name || "Loading..." }}</h1>
-              <p>{{ product.price_list_rate }}</p>
+              <p>{{ SingleProduct.price_list_rate }}</p>
               <div class="rating">
                 <span class="stars">★★★★★</span>
                 <span class="review">(150 Reviews)</span>
               </div>
-              <p class="description">{{ product.web_item_name }}</p>
+              <p class="description">{{ SingleProduct.web_item_name }}</p>
             </div>
             <div class="quantity-selection">
               <label for="quantity">الكمية:</label>
@@ -30,25 +30,33 @@
               </div>
               <button class="buy-btn">اشترى الان</button>
             </div>
-            <p>{{ product.short_description || "" }}</p>
+            <p>{{ SingleProduct.short_description || "" }}</p>
           </div>
           <div class="big-img-grid">
             <img
               :src="
-                tab ? tab : `https://erp.elfateh.online${product.website_image}`
+                tab
+                  ? tab
+                  : `https://erp.elfateh.online${SingleProduct.website_image}`
               "
               alt="big image"
             />
           </div>
 
-          <div class="smal-img-grid">
+          <div
+            v-if="SingleProduct.thumbnail && SingleProduct.thumbnail.length > 0"
+            class="smal-img-grid"
+          >
             <img
-              v-for="(img, index) in product.thumbnail"
+              v-for="(img, index) in SingleProduct.thumbnail.slice(0, 3)"
               :key="index"
               :src="`https://erp.elfateh.online${img}`"
               alt="small image"
               @click="swpImg(index)"
             />
+          </div>
+          <div v-else>
+            <!-- You can display something else if there are no thumbnails, like a placeholder -->
           </div>
         </div>
       </div>
@@ -58,9 +66,15 @@
 
 <script>
 import { productstore } from "@/stores/ShowDetails";
-
 import { mapActions, mapState } from "pinia";
+
 export default {
+  props: {
+    productId: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
     ...mapActions(productstore, ["getsingleProduct"]),
 
@@ -80,58 +94,25 @@ export default {
       );
     },
   },
-  async mounted() {
-    await this.getsingleProduct(this.$route.params.productid);
+  mounted() {
+    this.getsingleProduct(this.$route.params.productId);
+    console.log("getsingleProduct", this.$route.params.productId);
+    console.log("✅ Mounted web_item_name:", this.web_item_name);
+    if (this.web_item_name) {
+      this.getsingleProduct(decodeURIComponent(this.web_item_name));
+    } else {
+      console.error("❌ web_item_name is undefined in mounted()");
+    }
+    console.log("Product ID:", this.productId);
   },
   computed: {
     ...mapState(productstore, ["SingleProduct"]),
   },
+
   data() {
     return {
       tab: "",
       quantity: 1,
-      product: {
-        name: "WEB-ITM-0015",
-        owner: "Administrator",
-        creation: "2025-03-06 16:06:26.847472",
-        modified: "2025-03-06 16:06:43.505957",
-        modified_by: "Administrator",
-        docstatus: 0,
-        idx: 1,
-        naming_series: "WEB-ITM-.####",
-        web_item_name: "زبدة فيرن بالقطعة 1ك",
-        route: "سمن/زبدة-فيرن-بالقطعة-1ك-86lzq",
-        has_variants: 0,
-        variant_of: null,
-        published: 1,
-        freedelivery: 0,
-        item_code: "زبدة فيرن بالقطعة 1ك",
-        item_name: "زبدة فيرن بالقطعة 1ك",
-        item_group: "سمن",
-        stock_uom: "وحدة",
-        descound: 0.0,
-        service: 0,
-        sale: 0,
-        custom_flash_deals: 0,
-        description: "زبدة فيرن بالقطعة 1ك",
-        brand: null,
-        website_image: "/files/61e29ec7c3ecd14c64a8adb0_butter.webp",
-        website_image_alt: null,
-        slideshow: null,
-        thumbnail: [
-          "/files/Mysteries_of_Honey_2-1-600x330_small.jpg",
-          "/files/Mysteries_of_Honey_2-1-600x330_small.jpg",
-          "/files/Mysteries_of_Honey_2-1-600x330_small.jpg",
-        ],
-        website_warehouse: null,
-        on_backorder: 0,
-        short_description: null,
-        web_long_description: null,
-        show_tabbed_section: 0,
-        ranking: 0,
-        website_content: null,
-        price_list_rate: 135.0,
-      },
     };
   },
 };

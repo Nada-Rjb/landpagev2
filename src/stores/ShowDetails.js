@@ -51,26 +51,13 @@ export const productstore = defineStore("ShowDetails", {
           }
         );
 
-        // Ensure response data exists
-        if (!response.data || !response.data.message) {
-          console.error("Invalid API response format:", response.data);
-          this.SingleProduct = null;
-          return;
-        }
-
         // Extract product list safely
         const productList = response.data.message.website_item_for_salle;
-        if (!Array.isArray(productList)) {
-          console.error("website_item_for_salle is not an array:", productList);
-          this.SingleProduct = null;
-          return;
-        }
 
         // Find the matching product
         const product = productList.find(
           (item) => item.web_item_name === web_item_name
         );
-        console.log("product", product);
 
         if (product) {
           this.SingleProduct = product;

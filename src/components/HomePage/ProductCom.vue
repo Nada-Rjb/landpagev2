@@ -40,8 +40,10 @@
             </div>
             <button
               @click="
-                console.log(card.web_item_name) ||
-                  $router.push(`/product/${card.web_item_name}`)
+                $router.push({
+                  name: 'ProductDetails',
+                  params: { productId: card.web_item_name },
+                })
               "
             >
               View Product
